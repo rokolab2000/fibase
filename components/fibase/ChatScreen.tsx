@@ -2,7 +2,7 @@
 
 import { RefObject } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Phone, Star, MessageCircle, AlertCircle } from "lucide-react";
+import { Send, Phone, Star, MessageCircle, AlertCircle, QrCode } from "lucide-react";
 import { FiBaseAvatar } from "./FiBaseAvatar";
 import type { Message } from "./types";
 
@@ -13,6 +13,7 @@ interface ChatScreenProps {
   setInputValue: (v: string) => void;
   onSend: (query: string) => void;
   onReset: () => void;
+  onShowQR: () => void;
   chatEndRef: RefObject<HTMLDivElement | null>;
   points: number;
 }
@@ -168,6 +169,7 @@ export function ChatScreen({
   inputValue,
   setInputValue,
   onSend,
+  onShowQR,
   chatEndRef,
   points,
 }: ChatScreenProps) {
@@ -245,7 +247,20 @@ export function ChatScreen({
 
       {/* Input area */}
       <div className="border-t border-slate-100 bg-white px-4 py-4 rounded-t-3xl shadow-lg">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto flex flex-col gap-3">
+          {/* Transfer to phone button */}
+          <motion.button
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            onClick={onShowQR}
+            className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-violet-500 to-blue-500 hover:from-violet-600 hover:to-blue-600 text-white font-semibold text-base rounded-2xl px-5 py-4 min-h-[60px] shadow-md transition-all"
+            aria-label="Transferir sesion al celular"
+          >
+            <QrCode size={20} />
+            Llevar al celular
+          </motion.button>
+
           <div className="flex gap-3 bg-slate-50 rounded-3xl border-2 border-slate-200 p-2 focus-within:border-blue-400 transition-colors">
             <input
               type="text"

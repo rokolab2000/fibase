@@ -1,4 +1,4 @@
-export type AppState = "IDLE" | "PROCESSING" | "CHAT";
+export type AppState = "IDLE" | "PROCESSING" | "CHAT" | "QR_TRANSFER";
 
 export interface Message {
   id: string;

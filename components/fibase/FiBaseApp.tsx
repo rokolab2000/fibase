@@ -6,6 +6,7 @@ import { FiBaseHeader } from "./FiBaseHeader";
 import { IdleScreen } from "./IdleScreen";
 import { ProcessingScreen } from "./ProcessingScreen";
 import { ChatScreen } from "./ChatScreen";
+import { QRTransferScreen } from "./QRTransferScreen";
 import { simulateApiCall } from "./api";
 import type { AppState, Message } from "./types";
 
@@ -58,6 +59,14 @@ export default function FiBaseApp() {
     setMessages([]);
     setInputValue("");
     setIsLoading(false);
+  };
+
+  const handleShowQR = () => {
+    setAppState("QR_TRANSFER");
+  };
+
+  const handleContinueFromQR = () => {
+    setAppState("CHAT");
   };
 
   const handleChatQuery = async (query: string) => {
@@ -131,7 +140,25 @@ export default function FiBaseApp() {
                 setInputValue={setInputValue}
                 onSend={handleChatQuery}
                 onReset={handleReset}
+                onShowQR={handleShowQR}
                 chatEndRef={chatEndRef}
+                points={points}
+              />
+            </motion.div>
+          )}
+
+          {appState === "QR_TRANSFER" && (
+            <motion.div
+              key="qr"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4 }}
+              className="flex-1 flex flex-col"
+            >
+              <QRTransferScreen
+                onContinue={handleContinueFromQR}
+                onReset={handleReset}
                 points={points}
               />
             </motion.div>
