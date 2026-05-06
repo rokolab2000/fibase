@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Brain, PenLine, CheckCircle2 } from "lucide-react";
-import { FiBaseAvatar } from "./FiBaseAvatar";
+import { TokenAgentMascot } from "./TokenAgentMascot";
 
 interface ProcessingScreenProps {
   lastQuery: string;
@@ -30,10 +30,16 @@ export function ProcessingScreen({ lastQuery }: ProcessingScreenProps) {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] px-6 gap-8">
-      {/* Avatar pulsing */}
+      {/* Avatar pulsing with mascot */}
       <div className="relative">
-        <FiBaseAvatar size="lg" animate />
-        {/* Scanning ring */}
+        <div className="w-32 h-32">
+          <TokenAgentMascot
+            message="Analizando tu caso..."
+            emotion="thinking"
+            isSpeaking={true}
+          />
+        </div>
+        {/* Scanning rings */}
         <motion.div
           className="absolute inset-0 rounded-full border-4 border-emerald-400/50"
           animate={{ scale: [1, 1.5, 1.5], opacity: [0.8, 0, 0] }}

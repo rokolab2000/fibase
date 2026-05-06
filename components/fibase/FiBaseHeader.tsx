@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, RotateCcw } from "lucide-react";
-import { FiBaseAvatar } from "./FiBaseAvatar";
+import { TokenAgentMascot } from "./TokenAgentMascot";
 import type { AppState } from "./types";
 
 interface FiBaseHeaderProps {
@@ -16,7 +16,13 @@ export function FiBaseHeader({ points, onReset, appState }: FiBaseHeaderProps) {
     <header className="bg-white shadow-sm rounded-b-3xl px-6 py-4 flex items-center justify-between sticky top-0 z-50">
       {/* Left: Avatar + brand name */}
       <div className="flex items-center gap-3">
-        <FiBaseAvatar size="sm" animate={appState === "IDLE"} />
+        <div className="w-10 h-10">
+          <TokenAgentMascot
+            message=""
+            emotion="normal"
+            isSpeaking={false}
+          />
+        </div>
         <div>
           <h1 className="text-xl font-bold text-slate-800 leading-none">
             Fi{" "}

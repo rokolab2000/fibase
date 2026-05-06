@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { AlertTriangle, TrendingDown, Scale, Send } from "lucide-react";
-import { FiBaseAvatar } from "./FiBaseAvatar";
+import { TokenAgentMascot } from "./TokenAgentMascot";
 
 interface IdleScreenProps {
   onQuery: (query: string) => void;
@@ -59,21 +59,11 @@ export function IdleScreen({ onQuery }: IdleScreenProps) {
     <div className="flex flex-col items-center px-4 py-8 gap-8 max-w-2xl mx-auto w-full">
       {/* Hero section */}
       <div className="flex flex-col items-center gap-4 text-center">
-        <FiBaseAvatar size="lg" animate />
-
-        {/* Floating speech bubble */}
-        <motion.div
-          initial={{ opacity: 0, y: 10, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-          className="relative bg-white rounded-3xl shadow-md px-6 py-4 border border-slate-100 max-w-xs"
-        >
-          {/* Tail */}
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-r-[10px] border-b-[12px] border-l-transparent border-r-transparent border-b-white drop-shadow-sm" />
-          <p className="text-slate-700 text-lg font-medium leading-snug">
-            ¡Hola! Estoy aquí para ayudarte a entender y actuar. 👋
-          </p>
-        </motion.div>
+        <TokenAgentMascot
+          message="¡Hola! Estoy aquí para ayudarte a entender y actuar. 👋"
+          emotion="happy"
+          isSpeaking={false}
+        />
       </div>
 
       {/* Section label */}
