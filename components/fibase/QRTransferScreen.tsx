@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { QrCode, Smartphone, ArrowRight, CheckCircle2, Sparkles, MessageCircle } from "lucide-react";
+import { QrCode, Smartphone, Sparkles, Monitor } from "lucide-react";
 import { FiBaseAvatar } from "./FiBaseAvatar";
 
 interface QRTransferScreenProps {
@@ -34,90 +34,122 @@ export function QRTransferScreen({ onContinue, onReset, points }: QRTransferScre
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${sessionMessage}`;
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center px-6 py-8 gap-6">
-      <div className="max-w-md w-full flex flex-col items-center gap-6">
+    <div className="flex-1 flex flex-col items-center justify-start px-4 py-6 gap-4 overflow-y-auto">
+      <div className="max-w-lg w-full flex flex-col items-center gap-5">
         {/* Avatar with success state */}
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <FiBaseAvatar size="lg" animate />
+          <FiBaseAvatar size="md" animate />
         </motion.div>
 
-        {/* Success message */}
+        {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.4 }}
-          className="flex flex-col items-center gap-2 text-center"
+          className="flex flex-col items-center gap-1 text-center"
         >
-          <div className="flex items-center gap-2 text-emerald-600">
-            <CheckCircle2 size={24} className="fill-emerald-100" />
-            <span className="font-semibold text-lg">Sesion lista</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 leading-snug text-balance">
-            Continua en WhatsApp
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-800 leading-snug text-balance">
+            Lleva tu progreso contigo
           </h2>
+          <p className="text-slate-500 text-base">
+            Elige como quieres continuar
+          </p>
         </motion.div>
 
-        {/* QR Card with WhatsApp branding */}
+        {/* Points badge */}
+        {points > 0 && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3 }}
+            className="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-full px-4 py-2 text-amber-600 text-sm font-semibold"
+          >
+            <Sparkles size={14} className="fill-amber-300 text-amber-400" />
+            {points} puntos se transferiran
+          </motion.div>
+        )}
+
+        {/* Two options side by side */}
         <motion.div
-          initial={{ opacity: 0, y: 20, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35, duration: 0.5 }}
-          className="relative w-full bg-white rounded-3xl shadow-xl border border-slate-100 p-8 flex flex-col items-center gap-6"
+          className="w-full grid grid-cols-1 md:grid-cols-2 gap-4"
         >
-          {/* WhatsApp green gradient glow */}
-          <div 
-            className="absolute inset-0 rounded-3xl opacity-40 pointer-events-none"
-            style={{
-              background: "linear-gradient(135deg, rgba(37,211,102,0.2), rgba(18,140,126,0.15))",
-            }}
-          />
+          {/* Option 1: QR Code for Totem */}
+          <div className="bg-white rounded-3xl shadow-lg border border-slate-100 p-6 flex flex-col items-center gap-4">
+            {/* Header */}
+            <div className="flex items-center gap-2 text-slate-600">
+              <Monitor size={18} />
+              <span className="text-sm font-medium">Desde el totem</span>
+            </div>
 
-          {/* QR Icon with WhatsApp animated rings */}
-          <div className="relative">
-            {/* Pulsing rings in WhatsApp green */}
+            {/* QR Code */}
+            <div className="relative">
+              {/* Pulsing rings */}
+              <motion.div
+                className="absolute inset-0 rounded-2xl border-2 border-emerald-400/40"
+                animate={{ scale: [1, 1.1, 1], opacity: [0.6, 0, 0.6] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                style={{ margin: -6 }}
+              />
+
+              <div className="relative w-36 h-36 bg-white rounded-xl flex items-center justify-center border-2 border-slate-200 shadow-inner">
+                <motion.div
+                  animate={{ rotate: [0, 1, -1, 0] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                >
+                  <QrCode 
+                    size={100} 
+                    className="text-slate-800" 
+                    strokeWidth={1.2}
+                  />
+                </motion.div>
+
+                {/* WhatsApp logo in center */}
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
+                >
+                  <div className="w-10 h-10 bg-[#25D366] rounded-lg flex items-center justify-center shadow-md">
+                    <WhatsAppIcon size={22} className="text-white" />
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+
+            {/* Instructions */}
+            <p className="text-slate-500 text-sm text-center leading-relaxed">
+              Escanea con tu celular para continuar en{" "}
+              <span className="text-[#25D366] font-semibold">WhatsApp</span>
+            </p>
+          </div>
+
+          {/* Option 2: Direct WhatsApp Button for Mobile */}
+          <div className="bg-gradient-to-br from-[#25D366]/10 to-[#128C7E]/10 rounded-3xl shadow-lg border border-[#25D366]/20 p-6 flex flex-col items-center gap-4">
+            {/* Header */}
+            <div className="flex items-center gap-2 text-[#128C7E]">
+              <Smartphone size={18} />
+              <span className="text-sm font-medium">Desde tu celular</span>
+            </div>
+
+            {/* WhatsApp icon large */}
             <motion.div
-              className="absolute inset-0 rounded-3xl border-2 border-[#25D366]/40"
-              animate={{ scale: [1, 1.15, 1], opacity: [0.6, 0, 0.6] }}
+              className="relative"
+              animate={{ scale: [1, 1.03, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
-              style={{ margin: -8 }}
-            />
-            <motion.div
-              className="absolute inset-0 rounded-3xl border-2 border-[#128C7E]/30"
-              animate={{ scale: [1, 1.25, 1], opacity: [0.4, 0, 0.4] }}
-              transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
-              style={{ margin: -16 }}
-            />
+            >
+              <div className="w-36 h-36 bg-[#25D366] rounded-2xl flex items-center justify-center shadow-lg">
+                <WhatsAppIcon size={72} className="text-white" />
+              </div>
 
-            {/* QR Code with WhatsApp icon overlay */}
-            <div className="relative w-52 h-52 bg-white rounded-2xl flex items-center justify-center border-2 border-[#25D366]/30 shadow-inner">
-              <motion.div
-                animate={{ rotate: [0, 2, -2, 0] }}
-                transition={{ duration: 4, repeat: Infinity }}
-              >
-                <QrCode 
-                  size={140} 
-                  className="text-slate-800" 
-                  strokeWidth={1.2}
-                />
-              </motion.div>
-
-              {/* WhatsApp logo in center */}
-              <motion.div
-                className="absolute inset-0 flex items-center justify-center"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
-              >
-                <div className="w-14 h-14 bg-[#25D366] rounded-xl flex items-center justify-center shadow-lg">
-                  <WhatsAppIcon size={32} className="text-white" />
-                </div>
-              </motion.div>
-
-              {/* Sparkle decorations */}
+              {/* Sparkle decoration */}
               <motion.div
                 className="absolute -top-2 -right-2"
                 animate={{ scale: [1, 1.2, 1], rotate: [0, 15, 0] }}
@@ -125,116 +157,82 @@ export function QRTransferScreen({ onContinue, onReset, points }: QRTransferScre
               >
                 <Sparkles size={20} className="text-amber-400 fill-amber-200" />
               </motion.div>
-            </div>
-          </div>
+            </motion.div>
 
-          {/* Instruction text */}
-          <div className="flex flex-col items-center gap-3 text-center">
-            <p className="text-slate-600 text-lg leading-relaxed max-w-xs">
-              Escanea para llevar tu progreso y chat a tu celular via{" "}
-              <span className="text-[#25D366] font-semibold">WhatsApp</span>
+            {/* Direct WhatsApp button */}
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-bold text-base rounded-xl px-5 py-4 min-h-[56px] shadow-md transition-all flex items-center justify-center gap-2"
+              aria-label="Abrir WhatsApp directamente"
+            >
+              <WhatsAppIcon size={20} />
+              Abrir WhatsApp
+            </a>
+
+            <p className="text-[#128C7E] text-sm text-center">
+              Toca para continuar directo
             </p>
-
-            {/* Transfer visual: Totem -> WhatsApp */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="flex items-center gap-3 mt-2"
-            >
-              <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center border border-slate-200">
-                <MessageCircle size={22} className="text-slate-500" />
-              </div>
-              <motion.div
-                animate={{ x: [0, 6, 0] }}
-                transition={{ duration: 1.2, repeat: Infinity }}
-                className="text-slate-400"
-              >
-                <ArrowRight size={22} />
-              </motion.div>
-              <div className="w-12 h-12 rounded-xl bg-[#25D366] flex items-center justify-center shadow-md">
-                <WhatsAppIcon size={24} className="text-white" />
-              </div>
-            </motion.div>
-
-            {/* WhatsApp benefits */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
-              className="flex flex-wrap justify-center gap-2 mt-2"
-            >
-              {["Historial guardado", "Notificaciones", "Respuestas 24/7"].map((benefit, i) => (
-                <span
-                  key={benefit}
-                  className="text-xs bg-[#25D366]/10 text-[#128C7E] px-3 py-1.5 rounded-full font-medium"
-                >
-                  {benefit}
-                </span>
-              ))}
-            </motion.div>
           </div>
-
-          {/* Points earned */}
-          {points > 0 && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.8 }}
-              className="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-full px-4 py-2 text-amber-600 text-sm font-semibold"
-            >
-              <Sparkles size={14} className="fill-amber-300 text-amber-400" />
-              {points} puntos se transferiran
-            </motion.div>
-          )}
         </motion.div>
 
-        {/* Action buttons */}
+        {/* WhatsApp benefits */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="flex flex-wrap justify-center gap-2"
+        >
+          {["Historial guardado", "Notificaciones", "Respuestas 24/7"].map((benefit) => (
+            <span
+              key={benefit}
+              className="text-xs bg-[#25D366]/10 text-[#128C7E] px-3 py-1.5 rounded-full font-medium"
+            >
+              {benefit}
+            </span>
+          ))}
+        </motion.div>
+
+        {/* Divider */}
+        <div className="w-full flex items-center gap-3 my-1">
+          <div className="flex-1 h-px bg-slate-200" />
+          <span className="text-slate-400 text-sm">o</span>
+          <div className="flex-1 h-px bg-slate-200" />
+        </div>
+
+        {/* Secondary action buttons */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.4 }}
-          className="flex flex-col gap-3 w-full"
+          transition={{ delay: 0.6, duration: 0.4 }}
+          className="flex gap-3 w-full"
         >
-          {/* Primary: Open WhatsApp directly (for mobile users viewing this) */}
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-bold text-lg rounded-2xl px-6 py-5 min-h-[80px] shadow-lg transition-all flex items-center justify-center gap-3"
-            aria-label="Abrir WhatsApp directamente"
+          <button
+            onClick={onContinue}
+            className="flex-1 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-base rounded-2xl px-5 py-4 min-h-[64px] border-2 border-slate-200 hover:border-slate-300 transition-all flex items-center justify-center gap-2"
+            aria-label="Continuar en el totem"
           >
-            <WhatsAppIcon size={26} />
-            Abrir WhatsApp
-          </a>
-
-          <div className="flex gap-3">
-            <button
-              onClick={onContinue}
-              className="flex-1 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-base rounded-2xl px-5 py-4 min-h-[64px] border-2 border-slate-200 hover:border-slate-300 transition-all flex items-center justify-center gap-2"
-              aria-label="Continuar en el totem"
-            >
-              <Smartphone size={20} />
-              Seguir aqui
-            </button>
-            <button
-              onClick={onReset}
-              className="flex-1 bg-white hover:bg-slate-50 text-slate-500 font-semibold text-base rounded-2xl px-5 py-4 min-h-[64px] border-2 border-slate-200 hover:border-slate-300 transition-all flex items-center justify-center"
-              aria-label="Terminar sesion"
-            >
-              Nueva consulta
-            </button>
-          </div>
+            <Monitor size={20} />
+            Seguir en el totem
+          </button>
+          <button
+            onClick={onReset}
+            className="flex-1 bg-white hover:bg-slate-50 text-slate-500 font-semibold text-base rounded-2xl px-5 py-4 min-h-[64px] border-2 border-slate-200 hover:border-slate-300 transition-all flex items-center justify-center"
+            aria-label="Terminar sesion"
+          >
+            Nueva consulta
+          </button>
         </motion.div>
 
         {/* Privacy note */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.9 }}
-          className="text-slate-400 text-sm text-center max-w-xs"
+          transition={{ delay: 0.7 }}
+          className="text-slate-400 text-xs text-center max-w-xs"
         >
-          Al escanear, tu conversacion continuara de forma privada en tu WhatsApp personal.
+          Tu conversacion continuara de forma privada en tu WhatsApp personal.
         </motion.p>
       </div>
     </div>
