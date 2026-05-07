@@ -231,29 +231,37 @@ export default function TotemKiosk() {
   // ========== RENDER: IDLE SCREEN ==========
   if (totemState === "idle") {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col items-center justify-center p-4">
-        <div className="text-center max-w-md">
-          <div className="mb-8">
-            <div className="w-32 h-32 mx-auto bg-gradient-to-br from-emerald-400 to-blue-400 rounded-full flex items-center justify-center shadow-lg">
-              <MessageCircle size={80} className="text-white" />
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center p-8">
+        <div className="text-center max-w-2xl">
+          {/* Logo + Brand */}
+          <div className="mb-12">
+            <div className="w-40 h-40 mx-auto bg-gradient-to-br from-emerald-500 to-violet-600 rounded-full flex items-center justify-center shadow-lg mb-6">
+              <MessageCircle size={100} className="text-white" />
             </div>
+            <h1 className="text-6xl font-bold text-gray-900 mb-2 tracking-tight" style={{ fontFamily: 'Montserrat' }}>
+              FIBASE
+            </h1>
+            <p className="text-2xl text-gray-600 mb-6" style={{ fontFamily: 'Poppins' }}>
+              Tu guía financiera inteligente
+            </p>
           </div>
-          <h1 className="text-5xl font-bold text-gray-900 mb-4">Fi Base</h1>
-          <p className="text-2xl text-gray-600 mb-4">
-            Tu guía financiera inteligente
+
+          <p className="text-xl text-gray-500 mb-16 leading-relaxed" style={{ fontFamily: 'Poppins' }}>
+            Descubre cómo mejorar tus finanzas en minutos. Sin necesidad de login.
           </p>
-          <p className="text-lg text-gray-500 mb-12">
-            Toca la pantalla para comenzar. Descubre cómo mejorar tus finanzas en
-            minutos.
-          </p>
+
           <button
             onClick={handleStartChat}
-            className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-2xl px-12 py-6 rounded-xl shadow-lg transition-all min-h-[80px] flex items-center justify-center w-full"
+            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-2xl px-8 py-6 rounded-xl shadow-lg transition-all min-h-[90px] flex items-center justify-center"
+            style={{ fontFamily: 'Poppins' }}
             aria-label="Comenzar conversación"
           >
             Tocar para comenzar
           </button>
-          <p className="text-sm text-gray-400 mt-8">Sin necesidad de login</p>
+
+          <p className="text-sm text-gray-400 mt-8" style={{ fontFamily: 'Poppins' }}>
+            Disponible en tótems públicos
+          </p>
         </div>
       </div>
     );
@@ -261,16 +269,17 @@ export default function TotemKiosk() {
 
   // ========== RENDER: ACTIVE SCREEN (CHAT) ==========
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
-      <div className="bg-white shadow-md p-6 flex justify-between items-center">
+      <div className="bg-white shadow-sm border-b border-gray-200 p-6 flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900">Fi Base</h2>
-          <p className="text-lg text-gray-600">Nivel {level} • {points} puntos</p>
+          <h2 className="text-4xl font-bold text-gray-900" style={{ fontFamily: 'Montserrat' }}>FIBASE</h2>
+          <p className="text-lg text-gray-600" style={{ fontFamily: 'Poppins' }}>Nivel {level} • {points} puntos</p>
         </div>
         <button
           onClick={handleReset}
-          className="bg-red-500 hover:bg-red-600 text-white font-bold text-lg px-6 py-4 rounded-lg min-h-[60px]"
+          className="bg-red-500 hover:bg-red-600 text-white font-bold text-lg px-8 py-4 rounded-lg min-h-[60px] transition-all"
+          style={{ fontFamily: 'Poppins' }}
           aria-label="Reiniciar"
         >
           Reiniciar
@@ -278,20 +287,21 @@ export default function TotemKiosk() {
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-gray-50">
+      <div className="flex-1 overflow-y-auto p-8 space-y-6 bg-white">
         {messages.map((msg) => (
           <div
             key={msg.id}
             className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
           >
             <div
-              className={`max-w-md p-6 rounded-2xl text-lg ${
+              className={`max-w-2xl p-6 rounded-lg text-lg ${
                 msg.sender === "user"
-                  ? "bg-emerald-500 text-white"
+                  ? "bg-emerald-500 text-white shadow-md"
                   : msg.isEmergency
-                    ? "bg-red-500 text-white"
-                    : "bg-white text-gray-900 shadow-md"
+                    ? "bg-red-500 text-white shadow-md"
+                    : "bg-gray-100 text-gray-900 shadow-sm border border-gray-200"
               }`}
+              style={{ fontFamily: 'Poppins' }}
             >
               <p>{msg.text}</p>
             </div>
@@ -299,7 +309,7 @@ export default function TotemKiosk() {
         ))}
         {isProcessing && (
           <div className="flex justify-start">
-            <div className="bg-white p-6 rounded-2xl shadow-md">
+            <div className="bg-gray-100 p-6 rounded-lg shadow-sm border border-gray-200">
               <div className="flex gap-2">
                 <div className="w-3 h-3 bg-gray-400 rounded-full animate-bounce" />
                 <div className="w-3 h-3 bg-gray-400 rounded-full animate-bounce delay-100" />
@@ -313,8 +323,8 @@ export default function TotemKiosk() {
 
       {/* Story Options */}
       {!isProcessing && messages.length > 0 && messages[messages.length - 1].sender === "bot" && (
-        <div className="p-6 bg-white border-t border-gray-200 space-y-4">
-          <p className="text-gray-700 font-semibold text-lg">¿Cuál es tu situación?</p>
+        <div className="p-8 bg-gray-50 border-t border-gray-200 space-y-4">
+          <p className="text-gray-800 font-semibold text-lg" style={{ fontFamily: 'Poppins' }}>¿Cuál es tu situación?</p>
           <div className="grid grid-cols-1 gap-4">
             {Object.values(USER_STORIES_DB)
               .flat()
@@ -323,10 +333,11 @@ export default function TotemKiosk() {
                 <button
                   key={story.id}
                   onClick={() => handleSelectStory(story.id)}
-                  className="bg-blue-50 border-2 border-blue-300 hover:bg-blue-100 text-gray-900 font-semibold text-lg px-6 py-5 rounded-xl transition-all min-h-[70px] flex items-center justify-between"
+                  className="bg-white border-2 border-violet-300 hover:bg-violet-50 hover:border-violet-500 text-gray-900 font-semibold text-lg px-6 py-5 rounded-lg transition-all min-h-[70px] flex items-center justify-between shadow-sm"
+                  style={{ fontFamily: 'Poppins' }}
                 >
                   <span>{story.text}</span>
-                  <ChevronRight size={24} />
+                  <ChevronRight size={24} className="text-violet-600" />
                 </button>
               ))}
           </div>
@@ -336,19 +347,20 @@ export default function TotemKiosk() {
       {/* Modal: Reward / RUT / QR */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl">
+          <div className="bg-white rounded-2xl max-w-2xl w-full p-12 shadow-2xl">
             {modalStep === "reward" && (
               <div className="text-center">
-                <div className="text-6xl mb-6">🎉</div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-4">
+                <div className="text-8xl mb-8">🎉</div>
+                <h3 className="text-4xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Montserrat' }}>
                   ¡Felicidades!
                 </h3>
-                <p className="text-xl text-gray-600 mb-8">
+                <p className="text-2xl text-gray-600 mb-12" style={{ fontFamily: 'Poppins' }}>
                   Subiste a Nivel {level}. Has ganado {points} puntos.
                 </p>
                 <button
                   onClick={handleContinueFromReward}
-                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl px-6 py-5 rounded-xl min-h-[70px]"
+                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl px-8 py-6 rounded-lg min-h-[70px] transition-all shadow-md"
+                  style={{ fontFamily: 'Poppins' }}
                 >
                   Continuar
                 </button>
@@ -357,11 +369,11 @@ export default function TotemKiosk() {
 
             {modalStep === "rut" && (
               <div className="text-center">
-                <h3 className="text-3xl font-bold text-gray-900 mb-6">
+                <h3 className="text-4xl font-bold text-gray-900 mb-8" style={{ fontFamily: 'Montserrat' }}>
                   Ingresa tu RUT
                 </h3>
-                <div className="bg-gray-100 p-6 rounded-xl mb-6 text-center">
-                  <p className="text-4xl font-mono font-bold text-gray-900 tracking-widest">
+                <div className="bg-gray-100 p-8 rounded-lg mb-8 text-center border border-gray-300">
+                  <p className="text-5xl font-mono font-bold text-gray-900 tracking-widest">
                     {rut || "_ _ _ _ _ _ _ _"}
                   </p>
                 </div>
@@ -370,28 +382,32 @@ export default function TotemKiosk() {
                     <button
                       key={num}
                       onClick={() => handleRutInput(num.toString())}
-                      className="bg-blue-500 hover:bg-blue-600 text-white font-bold text-2xl py-4 rounded-lg"
+                      className="bg-violet-500 hover:bg-violet-600 text-white font-bold text-2xl py-5 rounded-lg transition-all shadow-sm"
+                      style={{ fontFamily: 'Poppins' }}
                     >
                       {num}
                     </button>
                   ))}
                   <button
                     onClick={() => handleRutInput("0")}
-                    className="col-span-3 bg-blue-500 hover:bg-blue-600 text-white font-bold text-2xl py-4 rounded-lg"
+                    className="col-span-3 bg-violet-500 hover:bg-violet-600 text-white font-bold text-2xl py-5 rounded-lg transition-all shadow-sm"
+                    style={{ fontFamily: 'Poppins' }}
                   >
                     0
                   </button>
                 </div>
                 <button
                   onClick={handleRutDelete}
-                  className="w-full bg-red-500 hover:bg-red-600 text-white font-bold text-lg px-6 py-4 rounded-lg mb-4"
+                  className="w-full bg-red-500 hover:bg-red-600 text-white font-bold text-lg px-6 py-4 rounded-lg mb-4 transition-all"
+                  style={{ fontFamily: 'Poppins' }}
                 >
                   Eliminar
                 </button>
                 <button
                   onClick={handleRutConfirm}
                   disabled={rut.length < 8}
-                  className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:bg-gray-300 text-white font-bold text-lg px-6 py-4 rounded-lg"
+                  className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:bg-gray-300 text-white font-bold text-lg px-6 py-4 rounded-lg transition-all"
+                  style={{ fontFamily: 'Poppins' }}
                 >
                   Confirmar RUT
                 </button>
@@ -400,19 +416,19 @@ export default function TotemKiosk() {
 
             {modalStep === "qr" && (
               <div className="text-center">
-                <h3 className="text-3xl font-bold text-gray-900 mb-6">
+                <h3 className="text-4xl font-bold text-gray-900 mb-8" style={{ fontFamily: 'Montserrat' }}>
                   Escanea con WhatsApp
                 </h3>
-                <div className="bg-gray-200 w-48 h-48 mx-auto rounded-xl mb-6 flex items-center justify-center">
-                  <QrCode size={120} className="text-gray-400" />
+                <div className="bg-violet-100 w-56 h-56 mx-auto rounded-lg mb-8 flex items-center justify-center border-4 border-violet-300">
+                  <QrCode size={140} className="text-violet-600" />
                 </div>
-                <p className="text-lg text-gray-600 mb-8">
-                  Abre WhatsApp en tu celular y escanea este código para continuar
-                  tu progreso.
+                <p className="text-xl text-gray-600 mb-12" style={{ fontFamily: 'Poppins' }}>
+                  Abre WhatsApp en tu celular y escanea este código para continuar tu progreso.
                 </p>
                 <button
                   onClick={handleCloseModal}
-                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-lg px-6 py-4 rounded-xl"
+                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-lg px-6 py-5 rounded-lg transition-all shadow-md"
+                  style={{ fontFamily: 'Poppins' }}
                 >
                   Listo, cerrar
                 </button>
