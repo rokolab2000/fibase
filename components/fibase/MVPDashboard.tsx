@@ -8,7 +8,7 @@ import { ChatScreen } from './ChatScreen';
 import { QRTransferScreen } from './QRTransferScreen';
 import type { Message } from './types';
 
-export function MVPDashboard() {
+export default function MVPDashboard() {
   const [currentScreen, setCurrentScreen] = useState<'dashboard' | 'chat' | 'qr'>('dashboard');
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
