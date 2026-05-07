@@ -1,3 +1,3 @@
 "use client";
 
-export { default } from "@/components/fibase/FinancialSimulator";
+export { default } from "@/components/fibase/MVPDashboard";
