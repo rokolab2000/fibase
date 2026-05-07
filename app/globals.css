@@ -4,44 +4,39 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(0.976 0.003 247);
-  --foreground: oklch(0.18 0.02 250);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.02 250);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.02 250);
-  --primary: oklch(0.62 0.19 155);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.94 0.01 247);
-  --secondary-foreground: oklch(0.25 0.02 250);
-  --muted: oklch(0.94 0.01 247);
-  --muted-foreground: oklch(0.5 0.02 250);
-  --accent: oklch(0.62 0.19 264);
-  --accent-foreground: oklch(1 0 0);
-  --destructive: oklch(0.55 0.22 27);
-  --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.91 0.01 247);
-  --input: oklch(0.91 0.01 247);
-  --ring: oklch(0.62 0.19 155);
-  --chart-1: oklch(0.62 0.19 155);
-  --chart-2: oklch(0.62 0.19 264);
-  --chart-3: oklch(0.62 0.19 230);
-  --chart-4: oklch(0.78 0.18 80);
-  --chart-5: oklch(0.55 0.22 27);
-  --radius: 1rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.18 0.02 250);
-  --sidebar-primary: oklch(0.62 0.19 155);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.94 0.01 247);
-  --sidebar-accent-foreground: oklch(0.25 0.02 250);
-  --sidebar-border: oklch(0.91 0.01 247);
-  --sidebar-ring: oklch(0.62 0.19 155);
-  /* Fi Base brand tokens */
-  --fibase-emerald: #22C55E;
-  --fibase-blue: #3B82F6;
-  --fibase-violet: #8B5CF6;
-  --fibase-amber: #F59E0B;
+  --background: #FFFFFF;
+  --foreground: #1A1A1A;
+  --card: #FFFFFF;
+  --card-foreground: #1A1A1A;
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1A1A;
+  --primary: #2ECC71;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F8F9FA;
+  --secondary-foreground: #1A1A1A;
+  --muted: #F0F2F5;
+  --muted-foreground: #6C757D;
+  --accent: #9B59B6;
+  --accent-foreground: #FFFFFF;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: #E5E7EB;
+  --input: #F3F4F6;
+  --ring: #2ECC71;
+  --chart-1: #2ECC71;
+  --chart-2: #9B59B6;
+  --chart-3: #3B82F6;
+  --chart-4: #F59E0B;
+  --chart-5: #EF4444;
+  --radius: 0.75rem;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #1A1A1A;
+  --sidebar-primary: #2ECC71;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F8F9FA;
+  --sidebar-accent-foreground: #1A1A1A;
+  --sidebar-border: #E5E7EB;
+  --sidebar-ring: #2ECC71;
 }
 
 .dark {
@@ -80,8 +75,8 @@
 }
 
 @theme inline {
-  --font-sans: 'Geist', 'Geist Fallback';
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Poppins', sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

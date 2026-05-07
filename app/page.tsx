@@ -1,3 +1,3 @@
 "use client";
 
-export { default } from "@/components/fibase/FiBaseApp";
+export { default } from "@/components/fibase/MVPDashboard";

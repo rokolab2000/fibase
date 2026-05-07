@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Montserrat, Poppins } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const montserrat = Montserrat({ subsets: ["latin"], variable: '--font-heading' });
+const poppins = Poppins({ weight: ['400', '500', '600', '700'], subsets: ["latin"], variable: '--font-body' });
 
 export const metadata: Metadata = {
   title: 'Fi Base — Tu guía financiera inteligente',
@@ -35,8 +35,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es" className="bg-slate-50">
-      <body className="font-sans antialiased bg-slate-50">
+    <html lang="es" className={`bg-white ${montserrat.variable} ${poppins.variable}`}>
+      <body className="font-body antialiased bg-white">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
